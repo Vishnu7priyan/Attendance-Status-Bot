@@ -16,3 +16,20 @@ def send_photo(chat_id, image_path, image_caption=""):
         print(ret.text)
     return ret.json()
 
+def login(driver,username,password):
+    driver.get('https://studentportal.hindustanuniv.ac.in/home.htm')
+    driver.find_element(By.XPATH, '//*[@id="username_temp"]').send_keys(username)
+    driver.find_element(By.XPATH, '//*[@id="form-password"]').send_keys(password)
+    driver.find_element(By.XPATH, '/html/body/div[1]/div/div[3]/div/div[2]/form/button').click()
+    driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div/ul/li[3]/a/i').click()
+    driver.find_element(By.XPATH, '/html/body/div[1]/div/div/div/ul/li[3]/ul/li[4]/a').click()
+    width = 1500
+    height = 2000
+    driver.set_window_size(width, height)
+    driver.get_screenshot_as_file("screenshot.png")
+    send_photo('Chat_id','screenshot.png',"today's status")
+    print('LOGGED IN...')
+username = input('Enter your Username: ')
+password = input('Enter your password: ')
+login(driver,username,password)
+driver.quit()
